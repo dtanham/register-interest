@@ -39,6 +39,8 @@ def getJS():
 
 @app.route("/interested", methods=['POST'])
 def register():
+	for x in flask.request.form:
+		print x
 	interest = Interest(email=flask.request.form['email'], referrer=flask.request.form['referrer'], registered=str(time.time()))
 	interest.save()
 	return flask.redirect(flask.request.form['redirect'])

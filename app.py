@@ -41,9 +41,9 @@ def getJS():
 def register():
 	for x in flask.request.form:
 		print x
-	interest = Interest(email=flask.request.form['email'], referrer=flask.request.form['referrer'], registered=str(time.time()))
+	interest = Interest(email=flask.request.form.get('email',''), referrer=flask.request.form.get('referrer',''), registered=str(time.time()))
 	interest.save()
-	return flask.redirect(flask.request.form['redirect'])
+	return flask.redirect(flask.request.form.get('redirectURL','http://www.google.com/'))
 
 @app.route("/interested", methods=['GET'])
 def list_interested():

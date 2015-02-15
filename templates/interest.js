@@ -11,14 +11,15 @@ var RegisterInterest = (function(w, home) {
 		var referrer = w.location.origin;
 
 		// Setup the callback
+		var xhr = new XMLHttpRequest();
 		xhr.onreadystatechange = function() {
 			if(xhr.readyState == 4 && xhr.status == 200) {
+				console.log("Successfully posted interest");
 				callback();
 			}
 		}
 
 		// Phone home with the details
-		var xhr = new XMLHttpRequest();
 		xhr.open('POST', home, true);
 		xhr.send('email='+email+'&referrer='+referrer);
 	}

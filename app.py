@@ -17,6 +17,7 @@ app = flask.Flask(__name__)
 
 # Set up encryption
 app.config['fernet-key'] = os.environ.get("FERNET_KEY")
+app.config['PUBLIC_URI'] = os.environ.get("PUBLIC_URI")
 
 # Connect to MongoDB
 def init_db():
@@ -34,7 +35,7 @@ init_db()
 
 @app.route("/interest.js")
 def getJS():
-	return flask.render_template("interest.js")
+	return flask.render_template("interest.js", home=app.config.get('PUBLIC_URI')+"/interested")
 
 @app.route("/interested", methods=['POST'])
 def register():

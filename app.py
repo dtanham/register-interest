@@ -21,7 +21,7 @@ app.config['fernet-key'] = os.environ.get("FERNET_KEY")
 # Connect to MongoDB
 def init_db():
 	with app.app_context():
-		app.config['MONGO_URI'] = os.environ.get("MONGOHQ_URL", "")
+		app.config['MONGO_URI'] = os.environ.get("MONGOLAB_URI", "")
 		print "Connecting using URI: %s" % app.config['MONGO_URI']
 		app.config['MONGODB_SETTINGS'] = {
 			'HOST': app.config['MONGO_URI'],

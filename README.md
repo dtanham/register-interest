@@ -12,4 +12,35 @@ A file is provided, ```decrypt_file.py``` that reads the ```FERNET_KEY``` enviro
 
 # Usage
 
-It's a python flask app, so use in the normal way. A ```Procfile``` has been provided for those who are Heroku minded, with a MongoHQ example URI.
+It's a python flask app, so use in the normal way. A ```Procfile``` has been provided for those who are Heroku minded, with a MongoHQ example URI. If you're doing so you're probably familiar with ```foreman```. Create a ```.env``` file with appropriate values for ```MONGOHQ_URI``` and ```FERNET_KEY``` and away you go:
+
+```
+pip install -r requirements.txt
+foreman start
+```
+
+Then do some curl tests:
+
+```
+# Should be empty
+curl -X GET http://localhost:5000/interested
+
+# Populate it with something
+curl -d "email=dave@example.com&referrer=curltest.example.com" -X POST http://localhost:5000/interested
+
+# Try again
+curl -X GET http://localhost:5000/interested
+
+# Save to file and try decrypting
+curl -X GET http://localhost:5000/interested > /tmp/encrypted_addresses.txt
+export $(grep FERNET .env) # Makes sure FERNET_KEY is an env var
+python decrypt_file.py /tmp/encrypted_addresses.txt
+
+```
+
+# Support
+
+I'm afraid there is none. Use at your own risk.
+
+**NOTE**: You need to protect your data at rest (ie in the DB and on whatever machine you're pulling the data down to). The encryption in this package is a quick way to get around building an *authenticated* endpoint with robust security.
+ 

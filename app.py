@@ -56,6 +56,10 @@ def list_interested():
 	token = f.encrypt(bytes(out))
 	return token
 
+@app.route("/interested/stats", methods=['GET'])
+def interested_stats():
+	return flask.jsonify({"registrations": len(Interest.objects())})
+
 if __name__ == "__main__":
 	app.run(debug=True)
 
